@@ -36,15 +36,15 @@ def records_json_search():
 class TestOstriz(object):
     def test_testrun_id_simple(self):
         testrun_id = ostriztools._get_testrun_id("5.8.0.17")
-        assert testrun_id == "5_8_0_17"
+        assert testrun_id == "5.8.0.17"
 
     def test_testrun_id_build(self):
         testrun_id = ostriztools._get_testrun_id("5.8.0.17-20170525183055_6317a22")
-        assert testrun_id == "5_8_0_17"
+        assert testrun_id == "5.8.0.17"
 
     def test_testrun_id_nofill(self):
         testrun_id = ostriztools._get_testrun_id("5.8.0.7-2017")
-        assert testrun_id == "5_8_0_7"
+        assert testrun_id == "5.8.0.7"
 
     def test_testrun_id_invalid(self):
         with pytest.raises(Dump2PolarionException) as excinfo:
@@ -68,7 +68,7 @@ class TestOstriz(object):
         assert len(records_json.results) == 6
         assert "title" in records_json.results[0]
         assert hasattr(records_json, "testrun")
-        assert records_json.testrun == "5_8_0_17"
+        assert records_json.testrun == "5.8.0.17"
 
     def test_invalid_json(self):
         fname = "junit-report.xml"
@@ -113,7 +113,7 @@ class TestOstriz(object):
         assert complete == parsed
 
     def test_e2e_ids_transform(self, config_prop, records_json):
-        exporter = XunitExport("5_8_0_17", records_json, config_prop)
+        exporter = XunitExport("5.8.0.17", records_json, config_prop)
         complete = exporter.export()
         fname = "ostriz_transform.xml"
         with io.open(os.path.join(conf.DATA_PATH, fname), encoding="utf-8") as input_xml:
@@ -121,7 +121,7 @@ class TestOstriz(object):
         assert complete == parsed
 
     def test_e2e_cmp_ids_transform(self, config_prop_cmp, records_json_cmp):
-        exporter = XunitExport("5_8_0_17", records_json_cmp, config_prop_cmp)
+        exporter = XunitExport("5.8.0.17", records_json_cmp, config_prop_cmp)
         complete = exporter.export()
         fname = "ostriz_transform_cmp.xml"
         with io.open(os.path.join(conf.DATA_PATH, fname), encoding="utf-8") as input_xml:
@@ -129,7 +129,7 @@ class TestOstriz(object):
         assert complete == parsed
 
     def test_e2e_ids_search_transform(self, config_prop, records_json_search):
-        exporter = XunitExport("5_8_0_17", records_json_search, config_prop)
+        exporter = XunitExport("5.8.0.17", records_json_search, config_prop)
         complete = exporter.export()
         fname = "ostriz_search_transform.xml"
         with io.open(os.path.join(conf.DATA_PATH, fname), encoding="utf-8") as input_xml:

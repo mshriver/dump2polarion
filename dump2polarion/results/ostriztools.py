@@ -51,17 +51,16 @@ def _get_testrun_id(version):
     Then use packaging Version to parse the version string
     Then cast each release component to string for joining with _
 
-    Build and returns testrun ID that looks like x_y_z_a from version x.y.z.a-20181114_abcdef
+    Build and returns testrun ID that looks like x.y.z.a from version x.y.z.a-20181114_abcdef
     """
     try:
         v = Version(version.split("-")[0].split("_")[0])
-        build_base = "_".join([str(i) for i in v.release])
     except InvalidVersion:
         raise Dump2PolarionException("InvalidVersion parsing testrun ID from {}".format(version))
     except Exception:
         # not in expected format
         raise Dump2PolarionException("Exception parsing testrun ID from {}".format(version))
-    return build_base
+    return v.vstring
 
 
 def _calculate_duration(start_time, finish_time):
